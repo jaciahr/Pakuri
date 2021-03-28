@@ -31,9 +31,9 @@ public class Pakuri {
         this.attack = newAttack;
     }
 
-    public void evolve(){                  //"evolves" the Pakuri, increasing its stats
-        this.attack = attack * 2;          //doubles the Pakuri's attack
-        this.defense = defense * 4;        //quadruples the Pakuri's defense
-        this.speed = speed * 3;            //triples the Pakuri's speed
+    public void evolve(){            //"evolves" the Pakuri, increasing its stats
+        this.attack = attack * 2;    //doubles the Pakuri's attack
+        this.defense = defense * 4;  //quadruples the Pakuri's defense
+        this.speed = speed * 3;      //triples the Pakuri's speed
     }
 }

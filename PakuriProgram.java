@@ -16,21 +16,22 @@ public class PakuriProgram{
     public static void main(String[] args){
         Scanner scnr = new Scanner(System.in);
         System.out.println("Welcome to Pakudex: Tracker Extraordinaire!"); //welcome message
-        System.out.println("Enter max capacity of the Pakudex: ");         //for user inputted Pakudex size
+        System.out.print("Enter max capacity of the Pakudex: ");         //for user inputted Pakudex size
         int pakudexSize = 0;
         boolean size = false;
-        while (size == false){ //continue looping until a correct input is given
+        while (!size){ //continue looping until a correct input is given
             try{ //try/catch invalid inputs
                 pakudexSize = scnr.nextInt();
                 while (pakudexSize < 0){
                     System.out.println("Please enter a valid size."); //error prompt
-                    System.out.println("Enter max capacity of the Pakudex: ");
+                    System.out.print("Enter max capacity of the Pakudex: ");
                     pakudexSize = scnr.nextInt();
                 }
                 size = true; //Can only break out of the loop when a correct input is given
-            } catch (Exception e){ //catches exception
+            }
+            catch (Exception e){ //catches exception
                 System.out.println("Please enter a valid size.");
-                System.out.println("Enter max capacity of the Pakudex: ");
+                System.out.print("Enter max capacity of the Pakudex: ");
                 scnr.next();
             }
         }
@@ -48,19 +49,32 @@ public class PakuriProgram{
                     }
                     System.out.println("Pakuri In Pakudex:");
                     String[] speciesList = Paku.getSpeciesArray();
-                    for (int Z = 0; Z < Paku.getSize(); Z++) {
+                    for (int Z = 0; Z < Paku.getSize(); Z++){
                         System.out.println((Z + 1) + ". " + speciesList[Z]); //displays list of Pakuri in the Pakudex w/ number
                     }
-                    System.out.println("");
+                    System.out.println();
                     break;
-                case "2": //promps for a species, collects species info, then displays it
-                    System.out.println("Enter the name of the species to display: ");
+                case "2": //prompts for a species, collects species info, then displays it
+                    System.out.print("Enter the name of the species to display: ");
                     String name = scnr.next(); //input Pakuri species
-                    int[] stats = Paku.getStats(name);
+                    Paku.getStats(name);
+                    speciesList = Paku.getSpeciesArray();
+                    for (int j = 0; j < speciesList.length; j++) { //used to print the stats of the Pakuri
+                        if (speciesList[i].equals(name)) {
+                            int [] stats = Paku.getStats(name);
+                            System.out.print("Species: " + name + "\n" +
+                                    "Attack: " + stats[0] + "'\n" +
+                                    "Defense: " + stats[1] + "\n" +
+                                    "Speed: " + stats[2]);
+                        }
+                        else {
+                            System.out.print("Error: No such Pakuri!"); //if the input doesn't match a species in the Pakudex
+                        }
+                    }
                     break;
                 case "3": //adds a Pakuri by reading the species name and giving a confirmation
-                    String species = null;
-                    try {
+                    String species;
+                    try{
                         if (Paku.getSize() == Paku.getCapacity()){ //if the Pakudex is at capacity
                             System.out.println("Error: Pakudex is full!\n");
                             break;
@@ -69,7 +83,8 @@ public class PakuriProgram{
                         species = scnr.next();
                         Paku.addPakuri(species); //adds Pakuri to the Pakudex
                         break;
-                    } catch (Exception e){
+                    }
+                    catch (Exception e){
                         System.out.println("Error: Pakudex is full!"); //aka at capacity
                     }
                     i++;
