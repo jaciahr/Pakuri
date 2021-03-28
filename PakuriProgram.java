@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
-public class PakuriProgram {
-    private static void printMenu() {                                   //method to print out the menu
-        System.out.println("Pakudex Main Menu");
+public class PakuriProgram{
+    private static void printMenu(){ //method to print menu
+        System.out.println("Pakudex Main Menu"); //displays menu prompt and menu options
         System.out.println("-----------------");
         System.out.println("1. List Pakuri");
         System.out.println("2. Show Pakuri");
@@ -13,84 +13,83 @@ public class PakuriProgram {
         System.out.print("What would you like to do? ");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Scanner scnr = new Scanner(System.in);
-        System.out.println("Welcome to Pakudex: Tracker Extraordinaire!");
-        System.out.println("Enter max capacity of the Pakudex: ");                 //gives user option for Pakudex size
+        System.out.println("Welcome to Pakudex: Tracker Extraordinaire!"); //welcome message
+        System.out.println("Enter max capacity of the Pakudex: ");         //for user inputted Pakudex size
         int pakudexSize = 0;
         boolean size = false;
-        while (size == false) {
-            try {                                                                   //try/catch for invalid input type
+        while (size == false){ //continue looping until a correct input is given
+            try{ //try/catch invalid inputs
                 pakudexSize = scnr.nextInt();
-                while (pakudexSize < 0) {
-                    System.out.println("Please enter a valid size.");
+                while (pakudexSize < 0){
+                    System.out.println("Please enter a valid size."); //error prompt
                     System.out.println("Enter max capacity of the Pakudex: ");
                     pakudexSize = scnr.nextInt();
                 }
-                size = true;
-            } catch (Exception e) {
+                size = true; //Can only break out of the loop when a correct input is given
+            } catch (Exception e){ //catches exception
                 System.out.println("Please enter a valid size.");
                 System.out.println("Enter max capacity of the Pakudex: ");
-                String flush = scnr.next();
+                scnr.next();
             }
         }
         Pakudex Paku = new Pakudex(pakudexSize);
-        System.out.println("The Pakudex can hold " + Paku.getCapacity() + " species of Pakuri.\n");
+        System.out.println("The Pakudex can hold " + Paku.getCapacity() + " species of Pakuri.\n"); //displays capacity of Pakudex
         printMenu();
         String selection = scnr.next();
         int i = 0;
-        while (selection != "6") {                             //while loop keeps the menu going until it is exited
-            switch (selection) {                                //switch performs the various menu options
-                case "1":
-                    if (Paku.getSize() == 0) {
+        while (selection != "6"){ //loops until the exit option is inputted
+            switch (selection){  //switch for the various menu options
+                case "1": //lists the Pakuri in the Pakudex with its number in order
+                    if (Paku.getSize() == 0){ //if there is no Pakuri in the Pakudex yet
                         System.out.println("No Pakuri in Pakudex yet!\n");
                         break;
-                    }                                                                //case one lists pakuri in pakudex
+                    }
                     System.out.println("Pakuri In Pakudex:");
                     String[] speciesList = Paku.getSpeciesArray();
                     for (int Z = 0; Z < Paku.getSize(); Z++) {
-                        System.out.println((Z + 1) + ". " + speciesList[Z]);
+                        System.out.println((Z + 1) + ". " + speciesList[Z]); //displays list of Pakuri in the Pakudex w/ number
                     }
                     System.out.println("");
                     break;
-                case "2":                                                          //case two displays specified pakuri
+                case "2": //promps for a species, collects species info, then displays it
                     System.out.println("Enter the name of the species to display: ");
-                    String name = scnr.next();
+                    String name = scnr.next(); //input Pakuri species
                     int[] stats = Paku.getStats(name);
                     break;
-                case "3":                                                           //case 3 adds pakuri if possible
+                case "3": //adds a Pakuri by reading the species name and giving a confirmation
                     String species = null;
                     try {
-                        if (Paku.getSize() == Paku.getCapacity()) {
+                        if (Paku.getSize() == Paku.getCapacity()){ //if the Pakudex is at capacity
                             System.out.println("Error: Pakudex is full!\n");
                             break;
                         }
                         System.out.println("Enter the name of the species to add: ");
                         species = scnr.next();
-                        Paku.addPakuri(species);
+                        Paku.addPakuri(species); //adds Pakuri to the Pakudex
                         break;
-                    } catch (Exception e) {
-                        System.out.println("Error: Pakudex is full!");
+                    } catch (Exception e){
+                        System.out.println("Error: Pakudex is full!"); //aka at capacity
                     }
                     i++;
                     break;
-                case "4":                                                        //case 4 evolves pakuri if found
+                case "4": //evolves inputted Pakuri if it exists
                     System.out.println("Enter the name of the species to evolve: ");
                     species = scnr.next();
                     Paku.evolveSpecies(species);
                     break;
-                case "5":                                                       //case 5 sorts pakuri alphabetically
+                case "5": //sorts Pakuri into lexicographical order
                     Paku.sortPakuri();
                     System.out.println("Pakuri have been sorted!\n");
                     break;
-                case "6":                                                       //case 6 evolves pakuri
+                case "6": //Quits the program
                     System.out.println("Thanks for using Pakudex! Bye!");
                     System.exit(0);
-                default:                                     //default prints error message and prompts for valid input
+                default:  //default error message, prompting for a valid input
                     System.out.println("Unrecognized menu selection!\n");
             }
             printMenu();
-
             selection = scnr.next();
         }
     }

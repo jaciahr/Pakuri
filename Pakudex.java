@@ -1,5 +1,4 @@
 public class Pakudex{
-
     private Pakuri[] pakudex;
     private int pakudexSize = 0;
 
@@ -15,17 +14,17 @@ public class Pakudex{
         return this.pakudexSize;
     }
 
-    public int getCapacity(){ //returns the maximum amount of Pakuri in the Pakudex
+    public int getCapacity(){ //returns the maximum amount of Pakuri that can fit in the Pakudex
         return pakudex.length;
     }
 
     public String[] getSpeciesArray(){ //returns a list of all of the Pakuri species currently in the Pakudex...
-        String[] species = new String[pakudexSize]; //...in its current order unless empty
+        String[] species = new String[pakudexSize]; //...in its current order, unless empty
         if (this.pakudexSize == 0){
-            return null;
+            return null; //signifies an empty Pakudex
         }
         for (int i = 0; i < this.pakudexSize; i++){
-            species[i] = pakudex[i].getSpecies();
+            species[i] = pakudex[i].getSpecies(); //copies the Pakudex into a new array for output
         }
         return species;
     }
@@ -39,7 +38,7 @@ public class Pakudex{
             }
         }
         if (ind == -1){
-            return null;
+            return null; //signifies an empty Pakudex
         }
         stats[0] = pakudex[ind].getAttack();
         stats[1] = pakudex[ind].getDefense();
@@ -65,27 +64,27 @@ public class Pakudex{
             if (pakudex[i] != null) {
                 String spec = pakudex[i].getSpecies();
                 if (spec.equals(species)){
-                    return false;
+                    return false; //no empty space; can't be added
                 }
             }
         }
-        if (pakudexSize != getCapacity()){
+        if (pakudexSize != getCapacity()){ //if the Pakudex is not full
             pakudex[pakudexSize] = new Pakuri(species);
             pakudexSize++;
-            return true;
+            return true; //Pakuri can be added
         }
         else {
-            return false;
+            return false; //if not, addition fails
         }
 
 
     }
 
     public boolean evolveSpecies(String species){ //attempts to evolve a species in the Pakudex, reporting success or failure
-        if (pakudexSize == 0) {
+        if (pakudexSize == 0){ //if there is no Pakuri in the Pakudex thus far
             return false;
         }
-        for (int i = 0; i < pakudexSize; i++){
+        for (int i = 0; i < pakudexSize; i++){ //evolve species
             if (pakudex[i].getSpecies().equals(species)){
                 pakudex[i].evolve();
                 return true;
