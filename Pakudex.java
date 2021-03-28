@@ -2,58 +2,56 @@ public class Pakudex {
     private Pakuri[] pakudex;
     private int numPakuri = 0;
 
-    public Pakudex(){                                                       //Default constructor, contains 20 Pakuri.
+    public Pakudex(){             //default constructor containing 20 Pakuri
         pakudex = new Pakuri[20];
     }
 
-    public Pakudex(int capacity){                          //initializes Pakudex to contain specified amount of Pakuri
+    public Pakudex(int capacity){ //initializes the Pakudex to contain the indicated amount of Pakuri
         pakudex = new Pakuri[capacity];
     }
 
-    public int getSize(){                                      //returnss the current amount of Pakuri in the Pakudex
+    public int getSize(){         //returns the current amount of Pakuri in the Pakudex
         int count = 0;
-        for (int i = 0; i < omgomg.length; i++) {
-            if (omgomg[i] != null) {
+        for (int i = 0; i < pakudex.length; i++) {
+            if (pakudex[i] != null) {
                 count++;
             }
         }
         return count;
     }
 
-    public int getCapacity() {                            //returns the total amount of possible pakuri for the pakudex
-        int pakudexSize = omgomg.length;
+    public int getCapacity(){    //returns the maximum amount of Pakuri in the Pakudex
+        int pakudexSize = pakudex.length;
         return pakudexSize;
     }
 
-    public String[] getSpeciesArray() {                   //returns a list of the current Pakuri species in the pakudex
-        String[] list = new String[getSize()];
+    public String[] getSpeciesArray(){   //returns a list of all of the Pakuri species currently in the Pakudex...
+        String[] list = new String[getSize()]; //...in its current order unless empty
         if (getSize() == 0) {
-            list = null;
-            return list;
+            return null;
         }
         for (int i = 0; i < getSize(); i++) {
-            list[i] = omgomg[i].species;
+            list[i] = pakudex[i].species;
         }
         return list;
     }
 
-    public int[] getStats(String species) {                 //prints and returns an array of the specified Pakuri stats
-        int[] stats = new int[3];
+    public int[] getStats(String species){  //prints and returns an array with the Pakuri stats at indices 0, 1, and 2...
+        int[] stats = new int[3];           //...unless empty
         if (getSize() > -1) {
             for (int j = 0; j < getSize(); j++) {
-                if (species.equals(omgomg[j].species)) {
-                    System.out.println("Species: " + omgomg[j].getSpecies());
-                    System.out.println("Attack: " + omgomg[j].getAttack());
-                    System.out.println("Defense: " + omgomg[j].getDefense());
-                    System.out.println("Speed: " + omgomg[j].getSpeed() + "\n");
-                    stats[0] = omgomg[j].getAttack();
-                    stats[1] = omgomg[j].getDefense();
-                    stats[2] = omgomg[j].getSpeed();
+                if (species.equals(pakudex[j].species)) {
+                    System.out.println("Species: " + pakudex[j].getSpecies());
+                    System.out.println("Attack: " + pakudex[j].getAttack());
+                    System.out.println("Defense: " + pakudex[j].getDefense());
+                    System.out.println("Speed: " + pakudex[j].getSpeed() + "\n");
+                    stats[0] = pakudex[j].getAttack();
+                    stats[1] = pakudex[j].getDefense();
+                    stats[2] = pakudex[j].getSpeed();
                     return stats;
                 }
                 for (int k = 0; k < getSize(); k++) {
-
-                    if (!(species.equals(omgomg[k].species))) {
+                    if (!(species.equals(pakudex[k].species))) {
                         break;
                     }
                 }
@@ -64,49 +62,48 @@ public class Pakudex {
         return stats;
     }
 
-    public void sortPakuri() {                                                 //alphabetizes the Pakuri in the Pakudex
+    public void sortPakuri(){  //sorts the Pakuri in the Pakudex by lexicographical order
         for (int i = 0; i < getSize() - 1; i++) {
             for (int j = i + 1; j < getSize(); j++) {
-                if (omgomg[i].species.compareTo(omgomg[j].species) > 0) {
-                    Pakuri temp = omgomg[i];
-                    omgomg[i] = omgomg[j];
-                    omgomg[j] = temp;
+                if (pakudex[i].species.compareTo(pakudex[j].species) > 0) {
+                    Pakuri temp = pakudex[i];
+                    pakudex[i] = pakudex[j];
+                    pakudex[j] = temp;
                 }
             }
         }
     }
 
-    public boolean addPakuri(String species) {       //determines if added Pakuri is duplicate, if not, adds new pakuri
-
-        if (getSize() > 0) {
+    public boolean addPakuri(String species){   //adds a species to the Pakudex, returning true if successful...
+        if (getSize() > 0) {                    //...and false if failed
             for (int i = 0; i < getSize(); i++) {
-                if (species.equals(omgomg[i].species)) {
+                if (species.equals(pakudex[i].species)) {
                     System.out.println("Error: Pakudex already contains this species!\n");
                     return false;
                 }
             }
         }
-        omgomg[numberOfPakuri] = new Pakuri(species);
-        numberOfPakuri++;
+        pakudex[numPakuri] = new Pakuri(species);
+        numPakuri++;
         System.out.println("Pakuri species " + species + " successfully added!\n");
 
         return true;
     }
 
-    public boolean evolveSpecies(String species) {                           //evolves a specific pakuri in the pakudex
-        if (getSize() == 0) {
+    public boolean evolveSpecies(String species){  //attempts to evolve a species in the Pakudex...
+        if (getSize() == 0) {                      //...reporting its success or failure
             System.out.println("Error: No such Pakuri!\n");
             return false;
         } else if (getSize() > 0) {
             for (int i = 0; i < getSize(); i++) {
-                if (species.equals(omgomg[i].species)) {
-                    omgomg[i].evolve();
+                if (species.equals(pakudex[i].species)) {
+                    pakudex[i].evolve();
                     System.out.println(species + " has evolved!\n");
                     return true;
                 }
             }
             for (int i = 0; i < getSize(); i++) {
-                if (!(species.equals(omgomg[i].species))) {
+                if (!(species.equals(pakudex[i].species))) {
                     System.out.println("Error: No such Pakuri!\n");
                     return true;
                 }
